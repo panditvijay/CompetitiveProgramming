@@ -1,0 +1,132 @@
+/* Author : A110011 - 00:19 "Code In Hard Way" 
+
+A constructive problem, spent some thinking to came up with this solution.
+
+*/
+ 
+#include<bits/stdc++.h>
+ 
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define sp(x,y)         fixed<<setprecision(y)<<x
+typedef long long int ll;
+ 
+using namespace std;
+ 
+ 
+bool static compare1(int x,int y){
+    return x>y;
+}
+ 
+ 
+int main(){
+ 
+	// For fast I/O.
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    
+   /* #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif */
+    
+   
+    int n,m;
+    cin>>n>>m;
+    
+    //vector<int> gr(n);
+    vector<int> pl(m);
+    
+    priority_queue<int,vector<int>> pq;
+    
+    //unordered_map<int,int> mp;
+    for(int i=0;i<n;i++){
+        int val;
+        cin>>val;
+        pq.push(val);
+      
+    }
+    
+    for(int i=0;i<m;i++){
+        cin>>pl[i];
+    }
+    
+   
+    sort(pl.begin(),pl.end(),compare1);
+    
+    
+    int tm=0;
+    
+   if(pq.top()>pl[0]){
+       cout<<-1<<endl;
+       return 0;
+   }
+    
+  int k=0;
+    int qs=0;
+    int tp=0;
+    
+    vector<int> last;
+    
+    while(!pq.empty()){
+        vector<int> tmp;
+        while(k<m && pq.top()<=pl[k]){
+           k++;
+            //tm++;
+            pq.pop();
+       
+        }
+       
+        if(k<m && pq.top()>pl[k] ){
+            for(int i=k;i<m;i++){
+                while(!pq.empty() && k<m && pq.top()>pl[k]){
+                    tmp.push_back(pq.top());
+                    
+                    pq.pop();
+                }
+                k++;
+                if(!pq.empty())
+                    pq.pop();
+                
+            }
+            for(int i=0;i<tmp.size();i++){
+                pq.push(tmp[i]);
+            }
+            
+        }
+        tm++;
+        qs=pq.size();
+        tp=pq.top();
+        
+        while(!pq.empty()){
+            last.push_back(pq.top());
+            pq.pop();
+        }
+       //pq=priority_queue<int>();
+    }
+ 
+ 
+ 
+    int i=0;
+while(i<last.size()){  
+    int k=0;
+for(;i<last.size();i++){
+    if(k<m && last[i]>pl[k]){
+        break;
+    }else{
+        k++;
+    }
+}
+    tm+=2;
+}
+    /*if(n-qs>qs){
+        tm+=2;
+    }else{
+        tm+=(qs/(n-qs))*2 + qs%(n-qs)*2;
+    }*/
+cout<<tm<<endl;
+ 
+return 0; 
+}
