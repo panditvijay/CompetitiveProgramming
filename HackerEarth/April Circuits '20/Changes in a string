@@ -1,0 +1,102 @@
+/* Author : A110011 - 00:19 "Code In Hard Way"
+
+This one is basically a variation of a problem longest non-decreasing subsequence with (NlogN) time complexity
+
+
+
+
+*/
+ 
+#include<bits/stdc++.h>
+ 
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define sp(x,y)         fixed<<setprecision(y)<<x
+typedef long long int ll;
+ 
+using namespace std;
+ 
+int CeilIndex(std::vector<char>& v, int l, int r, char key) 
+{ 
+    while (r - l > 1) { 
+        int m = l + (r - l) / 2; 
+        if (v[m] > key) 
+            r = m; 
+        else
+            l = m; 
+    } 
+  
+    return r; 
+} 
+  
+int lis(std::vector<char>& v) 
+{ 
+    if (v.size() == 0) 
+        return 0; 
+  
+    std::vector<char> tail(v.size(), 0); 
+    int length = 1; // always points empty slot in tail 
+  
+    tail[0] = v[0]; 
+    for (size_t i = 1; i < v.size(); i++) { 
+  
+        // new smallest value 
+        if (v[i] < tail[0]) 
+            tail[0] = v[i]; 
+  
+        // v[i] extends largest subsequence 
+        else if (v[i] >= tail[length - 1]) 
+            tail[length++] = v[i]; 
+  
+        else
+            tail[CeilIndex(tail, -1, length - 1, v[i])] = v[i]; 
+    } 
+  
+    return length; 
+} 
+void solve(){
+    int n;
+	string str;
+	cin>>n;
+ 
+	cin>>str;
+ 
+	vector<char> res;
+ 
+	for(int i=0;i<n;i++){
+		res.push_back(str[i]);
+	}
+ 
+	cout<<n-lis(res)<<endl;
+ 
+}
+ 
+int main(){
+ 
+	// For fast I/O.
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    
+   /* #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif */
+    
+   
+    int t;
+    cin>>t;
+    
+    for(int i=1;i<=t;i++){
+        //cout<<"Case "<<i<<": ";
+        solve();
+        //cout<<"\n";
+    }
+   
+ 
+ 
+ 
+return 0; 
+}
+ 
