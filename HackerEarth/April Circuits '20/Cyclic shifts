@@ -1,0 +1,82 @@
+
+/* Author : A110011 - 00:19 "Code In Hard Way" */
+ 
+#include<bits/stdc++.h>
+ 
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define sp(x,y)         fixed<<setprecision(y)<<x
+typedef long long int ll;
+ 
+using namespace std;
+ 
+ 
+void solve(){
+    int n,m;
+	
+	char l;
+	cin>>n>>m>>l;
+ 
+	bitset<16> b(n);
+	vector<int> res;
+  
+    for(int i=15;i>=0;i--){
+        //cout<<b[i]<<" ";
+        res.push_back(b[i]);
+    }
+    
+    vector<int> tt;
+    
+	if(l=='L'){
+	for(int i=m;i<16+m;i++){
+		//cout<<res[i%16]<<" ";
+		tt.push_back(res[i%16]);
+	}
+        //cout<<endl;
+	}else{
+		for(int i=16-m;i<16-m+16;i++){
+		//cout<<res[i%16]<<" ";
+		tt.push_back(res[i%16]);
+	}
+	}
+ 
+int sum=0;
+	for(int i=15;i>=0;i--){
+		//cout<<res[i]<<" ";
+			if(tt[i]==1){
+				sum+=pow(2,15-i);
+			}
+	}
+ 
+	cout<<sum<<endl;
+}
+ 
+int main(){
+ 
+	// For fast I/O.
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    
+   /* #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif */
+    
+   
+    int t;
+    cin>>t;
+    
+    for(int i=1;i<=t;i++){
+        //cout<<"Case "<<i<<": ";
+        solve();
+        //cout<<"\n";
+    }
+   
+ 
+ 
+ 
+return 0; 
+}
+ 
