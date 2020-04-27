@@ -1,0 +1,172 @@
+/* Author : A110011 - 00:19 -6-13-9-4 "Code In Hard Way"
+
+
+Time complexity Q*sqrt(N), Again TLE except 4 test cases :D
+
+*/
+ 
+#include<bits/stdc++.h>
+ 
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define sp(x,y)         fixed<<setprecision(y)<<x
+typedef long long int ll;
+ 
+using namespace std;
+ 
+int nb;
+ 
+bool static compare(pair<pair<int,int>,int> x,pair<pair<int,int>,int> y){
+    if(x.first.first/nb!=y.first.first/nb){
+       return x.first.first/nb<y.first.first/nb;
+    }
+    
+    return x.first.second<y.first.second;
+}
+ 
+void checkH(int &nb,int &q,vector<int> &res,vector<pair<pair<int,int>,int>> &vp,vector<int> &occ,vector<int> &indx){
+    
+    sort(vp.begin(),vp.end(),compare);
+    
+    /*for(int i=0;i<vp.size();i++){
+        cout<<vp[i].first.first<<" "<<vp[i].first.second<<endl;
+    }
+    */
+    unordered_map<int,int> mp;
+    
+    int cl=0,cr=0;
+    
+    for(int i=0;i<q;i++){
+        int l=vp[i].first.first;
+        int r=vp[i].first.second;
+        int in=vp[i].second;
+        
+        while (cl < l) 
+        { 
+            mp[res[cl]]--;
+            if(res[cl]==0){
+                mp.erase(res[cl]);
+            }
+            cl++; 
+        } 
+  
+        // Add Elements of current Range 
+        while (cl > l) 
+        { 
+            mp[res[cl-1]]++; 
+            cl--; 
+        } 
+        while (cr <= r) 
+        { 
+            
+            mp[res[cr]]++;
+            cr++; 
+        } 
+  
+        while (cr > r+1) 
+        { 
+             
+            mp[res[cr-1]]--;
+            if(res[cl-1]==0){
+                mp.erase(res[cl-1]);
+            }
+            cr--; 
+        } 
+        
+        unordered_map<int,int>::iterator it;
+        
+        bool flg=true;
+        
+        for(it=mp.begin();it!=mp.end();it++){
+            //cout<<it->first<<":"<<it->second<<" ";
+            if(it->second==0){
+                continue;
+            }
+            if(it->second!=occ[it->first-1]){
+                //cout<<0<<endl;
+                indx[in]=0;
+                flg=false;
+                break;
+            }
+        }
+        
+        if(flg){
+            indx[in]=1;
+            //cout<<1<<endl;
+        }
+        
+        
+    }
+    
+    for(int i=0;i<indx.size();i++){
+        cout<<indx[i]<<endl;
+    }
+}
+ 
+ 
+int main(){
+ 
+	// For fast I/O.
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    
+   /* #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif */
+    
+    int n,m;
+    cin>>n>>m;
+    
+    vector<int> res(n);
+    
+    for(int i=0;i<n;i++){
+        cin>>res[i];
+    }
+   
+    vector<int> occ(m);
+    
+    for(int i=0;i<m;i++){
+        cin>>occ[i];
+    }
+    
+    
+    int bs=sqrt(n);
+    
+   
+    
+    if(n%bs==0){
+        nb=n/bs;
+    }else{
+        nb=n/bs+1;
+    }
+    
+    vector<pair<pair<int,int>,int>> vp;
+    
+    
+    
+    int q;
+    cin>>q;
+    //cout<<"trst";
+    for(int i=0;i<q;i++){
+        int l,r;
+        cin>>l>>r;
+        l--;r--;
+        
+        vp.push_back(make_pair(make_pair(l,r),i));
+        
+       
+    }
+    
+    vector<int> indx(q);
+    
+    checkH(nb,q,res,vp,occ,indx);
+    
+   
+ 
+ 
+ 
+return 0; 
+}
