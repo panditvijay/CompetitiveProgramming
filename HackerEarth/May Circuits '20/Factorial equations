@@ -1,0 +1,63 @@
+/* Author : A110011 - 00:19 "CodeIn Hard Way" */
+ 
+#include<bits/stdc++.h>
+ 
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define sp(x,y)         fixed<<setprecision(y)<<x
+typedef long long int ll;
+ 
+using namespace std;
+ 
+ 
+ 
+ 
+int main(){
+ 
+	// For fast I/O.
+    ios_base::sync_with_stdio(false); 
+    cin.tie(NULL); 
+    
+   /* #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+    #endif */
+    
+   
+    ll x,n;
+ 
+	cin>>x>>n;
+	bool flg=true;
+ 
+	if(n>=5){
+		cout<<1<<endl;
+		flg=false;
+	}
+ 
+	if(flg){
+		ll sm=1;
+ 
+		for(int i=2;i<=n;i++){
+			sm*=i;
+		}
+		
+		sm=sm%10;
+ 
+		x=x%10;
+		int d=x;
+		for(int i=0;i<sm-1;i++){
+			x=x*d;
+			x=x%10;
+		}
+ 
+ 
+ 
+		cout<<x%10<<endl;
+	}
+ 
+ 
+ 
+return 0; 
+}
